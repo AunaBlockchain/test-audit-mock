@@ -1,0 +1,37 @@
+name: AI Unit Test Audit
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    name: Audit Unit Tests
+    
+    steps:
+      - name: Trigger Audit Agent
+        run: |
+          echo "🤖 AI Unit Test Audit triggered"
+          echo "PR: ${{ github.event.pull_request.number }}"
+          echo "Title: ${{ github.event.pull_request.title }}"
+          echo "Branch: ${{ github.head_ref }}"
+          echo ""
+          echo "This workflow will trigger the nuam-ai-unit-test-audit agent"
+          echo "to analyze the unit test quality in this PR."
+          echo ""
+          echo "The agent will:"
+          echo "  1. Discover the PR and changed files"
+          echo "  2. Extract requirements from linked Jira issues (if available)"
+          echo "  3. Analyze test coverage and quality using AI"
+          echo "  4. Post a detailed audit comment on this PR"
+          
+      - name: Log PR Details
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "Head SHA: ${{ github.event.pull_request.head.sha }}"
+          echo "Base Branch: ${{ github.base_ref }}"
